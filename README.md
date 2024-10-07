@@ -7,7 +7,7 @@ import java.util.Map;
 
 class KeyValue {
     private String key;
-    private String value;
+    private String value; //значение
 
     public KeyValue(String key, String value) {
         this.key = key;
@@ -24,8 +24,8 @@ class KeyValue {
 }
 
 public class HashTable {
-    private HashMap<String, KeyValue> keyMap;
-
+    private HashMap<String, KeyValue> keyMap; // создает поле keyMap типа HashMap, которое
+    // будет хранить пары ключ-значение.
     public HashTable() {
         keyMap = new HashMap<>();
     }
@@ -41,7 +41,6 @@ public class HashTable {
     public void remove(String key) {
         keyMap.remove(key);
     }
-
     public int size() {
         return keyMap.size();
     }
@@ -74,21 +73,21 @@ public class HashTable {
 
 
 
-
 Задача 2
 
 import java.util.HashMap;
 
-class Book {
+class Book { //определяет класс, который представляет книгу
     private String title;
     private String author;
     private int copies;
 
-    public Book(String title, String author, int copies) {
+    public Book(String title, String author, int copies) { //инициализирует объект Book
         this.title = title;
         this.author = author;
         this.copies = copies;
     }
+
 
     public String getTitle() {
         return title;
@@ -112,23 +111,23 @@ public class Library {
     private HashMap<String, Book> bookMap; // Явное объявление HashMap
 
     public Library() {
-        bookMap = new HashMap<>();
+        bookMap = new HashMap<>(); //создает поле bookMap типа HashMap, которое будет хранить книги с ключом ISBN.
     }
 
     public void addBook(String isbn, Book book) {
-        bookMap.put(isbn, book); // Добавление книги в хэш-таблицу
+        bookMap.put(isbn, book); // Добавление
     }
 
     public Book findBook(String isbn) {
-        return bookMap.get(isbn); // Поиск книги по ISBN
+        return bookMap.get(isbn); // Поиск
     }
 
     public void removeBook(String isbn) {
-        bookMap.remove(isbn); // Удаление книги по ISBN
+        bookMap.remove(isbn); // Удаление
     }
 
     public static void main(String[] args) {
-        Library library = new Library();
+        Library library = new Library(); //создает объект Library
 
         // Добавление книг
         library.addBook("978-0143034231", new Book("1984", "George Orwell", 5));
@@ -136,7 +135,7 @@ public class Library {
 
         // Поиск книги
         Book foundBook = library.findBook("978-0143034231");
-        if (foundBook != null) {
+        if (foundBook != null) { //проверяет, найдена ли книга.
             System.out.println("Найдена книга: " + foundBook.getTitle() + " by " + foundBook.getAuthor());
         } else {
             System.out.println("Книга не найдена.");
