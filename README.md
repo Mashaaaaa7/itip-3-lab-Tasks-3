@@ -2,14 +2,14 @@
 
 Задача 1
 
+
 import java.util.HashMap;
-import java.util.Map;
 
-class KeyValue {
+class KeyValue { //представляет пару ключ-значение
     private String key;
-    private String value; //значение
+    private String value;
 
-    public KeyValue(String key, String value) {
+    public KeyValue(String key, String value) { //хранит ключ и значение
         this.key = key;
         this.value = value;
     }
@@ -23,54 +23,65 @@ class KeyValue {
     }
 }
 
-public class HashTable {
-    private HashMap<String, KeyValue> keyMap; // создает поле keyMap типа HashMap, которое
-    // будет хранить пары ключ-значение.
+public class HashTable  {
+    private HashMap<String, KeyValue> keyMap; //создает поле keyMap типа HashMap, которое будет хранить пары ключ-значение
+
     public HashTable() {
-        keyMap = new HashMap<>();
+        keyMap = new HashMap<>(); //инициализирует keyMap пустым HashMap.
     }
 
-    public void put(String key, KeyValue value) {
+    public void put(String key, KeyValue value) { //добавляет пару ключ-значение в таблицу.
         keyMap.put(key, value);
     }
 
-    public KeyValue get(String key) {
+    public KeyValue get(String key) { //возвращает объект KeyValue, связанный с указанным ключом. Не найден=null
         return keyMap.get(key);
     }
 
     public void remove(String key) {
         keyMap.remove(key);
     }
-    public int size() {
+
+    public int size() { //количество
         return keyMap.size();
     }
 
-    public boolean isEmpty() {
+    public boolean isEmpty() { //пустая таблица
         return keyMap.isEmpty();
     }
 
+    //*В методе main создается объект HashTable, добавляются пары ключ-значение, выводится размер таблицы,
+    // и выводится результат проверки на пустоту таблицы.
+
     public static void main(String[] args) {
-        HashTable hashTable = new HashTable();
-        hashTable.put("name", new KeyValue("name", "John Doe"));
-        hashTable.put("age", new KeyValue("age", "30"));
+        HashTable HashTable  = new HashTable(); //создает объект HashTable
+        HashTable.put("name", new KeyValue("name", "George Doe"));
+        HashTable.put("age", new KeyValue("age", "21"));
 
-        System.out.println("Размер таблицы: " + hashTable.size()); // Вывод: 2
+        System.out.println("Размер таблицы: " + HashTable.size());
 
-        KeyValue value = hashTable.get("name");
-        if (value != null) {
-            System.out.println("Значение для ключа 'name': " + value.getValue()); // Вывод: John Doe
+        KeyValue value = HashTable.get("name"); //получение значения по ключу name
+        if (value != null) {  //проверяет, найдено ли значение.
+            System.out.println("Значение для ключа 'name': " + value.getValue());
         } else {
             System.out.println("Ключ 'name' не найден.");
         }
 
-        hashTable.remove("age");
+         value = HashTable.get("age"); //получение значения по ключу age
+        if (value != null) {  //проверяет, найдено ли значение
+            System.out.println("Значение для ключа 'age': " + value.getValue());
+        } else {
+            System.out.println("Ключ 'age' не найден.");
+        }
 
-        System.out.println("Размер таблицы: " + hashTable.size()); // Вывод: 1
+        HashTable.remove("name"); //удаляет пару по ключу “name”
+        HashTable.remove("age"); //удаляет пару по ключу “age”
 
-        System.out.println("Пуста ли таблица: " + hashTable.isEmpty()); // Вывод: false
+        System.out.println("Размер таблицы: " + HashTable.size()); // после удаления
+
+        System.out.println("Пуста ли таблица: " + HashTable.isEmpty());
     }
 }
-
 
 
 Задача 2
@@ -107,7 +118,7 @@ class Book { //определяет класс, который представ�
     }
 }
 
-public class Library {
+public class Library { //определяет класс Библиотека
     private HashMap<String, Book> bookMap; // Явное объявление HashMap
 
     public Library() {
@@ -115,15 +126,15 @@ public class Library {
     }
 
     public void addBook(String isbn, Book book) {
-        bookMap.put(isbn, book); // Добавление
+        bookMap.put(isbn, book); // Добавление книги в хэш-таблиц
     }
 
     public Book findBook(String isbn) {
-        return bookMap.get(isbn); // Поиск
+        return bookMap.get(isbn);
     }
 
     public void removeBook(String isbn) {
-        bookMap.remove(isbn); // Удаление
+        bookMap.remove(isbn);
     }
 
     public static void main(String[] args) {
@@ -141,12 +152,27 @@ public class Library {
             System.out.println("Книга не найдена.");
         }
 
+        Book foundBook2 = library.findBook("978-0141439501");
+        if (foundBook2 != null) {
+            System.out.println("Найдена книга: " + foundBook2.getTitle() + " by " + foundBook2.getAuthor());
+        } else {
+            System.out.println("Книга не найдена.");
+        }
+
         // Удаление книги
+        library.removeBook("978-0141439501");
         library.removeBook("978-0141439501");
 
         // Поиск удаленной книги
         foundBook = library.findBook("978-0141439501");
         if (foundBook != null) {
+            System.out.println("Книга найдена.");
+        } else {
+            System.out.println("Книга не найдена.");
+        }
+
+        foundBook2 = library.findBook("978-0141439501");
+        if (foundBook2 != null) {
             System.out.println("Книга найдена.");
         } else {
             System.out.println("Книга не найдена.");
