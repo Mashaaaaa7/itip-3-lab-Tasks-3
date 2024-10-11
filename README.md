@@ -2,7 +2,6 @@
 
 Задача 1
 
-
 import java.util.HashMap;
 
 class KeyValue { //представляет пару ключ-значение
@@ -23,10 +22,10 @@ class KeyValue { //представляет пару ключ-значение
     }
 }
 
-public class HashTable  {
+public class Entry  {
     private HashMap<String, KeyValue> keyMap; //создает поле keyMap типа HashMap, которое будет хранить пары ключ-значение
 
-    public HashTable() {
+    public Entry() {
         keyMap = new HashMap<>(); //инициализирует keyMap пустым HashMap.
     }
 
@@ -54,35 +53,33 @@ public class HashTable  {
     // и выводится результат проверки на пустоту таблицы.
 
     public static void main(String[] args) {
-        HashTable HashTable  = new HashTable(); //создает объект HashTable
-        HashTable.put("name", new KeyValue("name", "George Doe"));
-        HashTable.put("age", new KeyValue("age", "21"));
+        Entry Entry  = new Entry(); //создает объект
+        Entry.put("name", new KeyValue("name", "George Doe"));
+        Entry.put("age", new KeyValue("age", "21"));
 
-        System.out.println("Размер таблицы: " + HashTable.size());
+        System.out.println("Размер таблицы: " + Entry.size());
 
-        KeyValue value = HashTable.get("name"); //получение значения по ключу name
+        KeyValue value = Entry.get("name"); //получение значения по ключу name
         if (value != null) {  //проверяет, найдено ли значение.
             System.out.println("Значение для ключа 'name': " + value.getValue());
         } else {
             System.out.println("Ключ 'name' не найден.");
         }
 
-         value = HashTable.get("age"); //получение значения по ключу age
+         value = Entry.get("age"); //получение значения по ключу age
         if (value != null) {  //проверяет, найдено ли значение
             System.out.println("Значение для ключа 'age': " + value.getValue());
         } else {
             System.out.println("Ключ 'age' не найден.");
         }
 
-        HashTable.remove("name"); //удаляет пару по ключу “name”
-        HashTable.remove("age"); //удаляет пару по ключу “age”
+        Entry.remove("name"); //удаляет пару по ключу “name”
+        Entry.remove("age"); //удаляет пару по ключу “age”
 
-        System.out.println("Размер таблицы: " + HashTable.size()); // после удаления
-
-        System.out.println("Пуста ли таблица: " + HashTable.isEmpty());
+        System.out.println("Размер таблицы: " + Entry.size());
+        System.out.println("Пуста ли таблица: " + Entry.isEmpty());
     }
 }
-
 
 Задача 2
 
