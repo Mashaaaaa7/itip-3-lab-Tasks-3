@@ -2,83 +2,130 @@
 
 Задача 1
 
-import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Objects;
 
-class KeyValue { //представляет пару ключ-значение
-    private String key;
-    private String value;
+public class HashTable<K, V> {
 
-    public KeyValue(String key, String value) { //хранит ключ и значение
-        this.key = key;
-        this.value = value;
-    }
+    private static class Entry<K, V> {
 
-    public String getKey() {
-        return key;
-    }
-
-    public String getValue() {
-        return value;
-    }
-}
-
-public class Entry  {
-    private HashMap<String, KeyValue> keyMap; //создает поле keyMap типа HashMap, которое будет хранить пары ключ-значение
-
-    public Entry() {
-        keyMap = new HashMap<>(); //инициализирует keyMap пустым HashMap.
-    }
-
-    public void put(String key, KeyValue value) { //добавляет пару ключ-значение в таблицу.
-        keyMap.put(key, value);
-    }
-
-    public KeyValue get(String key) { //возвращает объект KeyValue, связанный с указанным ключом. Не найден=null
-        return keyMap.get(key);
-    }
-
-    public void remove(String key) {
-        keyMap.remove(key);
-    }
-
-    public int size() { //количество
-        return keyMap.size();
-    }
-
-    public boolean isEmpty() { //пустая таблица
-        return keyMap.isEmpty();
-    }
-
-    //*В методе main создается объект HashTable, добавляются пары ключ-значение, выводится размер таблицы,
-    // и выводится результат проверки на пустоту таблицы.
-
-    public static void main(String[] args) {
-        Entry Entry  = new Entry(); //создает объект
-        Entry.put("name", new KeyValue("name", "George Doe"));
-        Entry.put("age", new KeyValue("age", "21"));
-
-        System.out.println("Размер таблицы: " + Entry.size());
-
-        KeyValue value = Entry.get("name"); //получение значения по ключу name
-        if (value != null) {  //проверяет, найдено ли значение.
-            System.out.println("Значение для ключа 'name': " + value.getValue());
-        } else {
-            System.out.println("Ключ 'name' не найден.");
+        private final K key;
+        private V value;
+        public Entry(K key, V value) {
+            this.key = key;
+            this.value = value;
         }
 
-         value = Entry.get("age"); //получение значения по ключу age
-        if (value != null) {  //проверяет, найдено ли значение
-            System.out.println("Значение для ключа 'age': " + value.getValue());
-        } else {
-            System.out.println("Ключ 'age' не найден.");
+        public K getKey() {
+            return key;
         }
 
-        Entry.remove("name"); //удаляет пару по ключу “name”
-        Entry.remove("age"); //удаляет пару по ключу “age”
+        public V getValue() {
+            return value;
+        }
 
-        System.out.println("Размер таблицы: " + Entry.size());
-        System.out.println("Пуста ли таблица: " + Entry.isEmpty());
+        public void setValue(V value) {
+            this.value = value;
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+
+            if (this == obj) {
+                return true;
+            }
+
+            if (!(obj instanceof Entry<?, ?> entry)) {
+                return false;
+            }
+
+            return Objects.equals(getKey(), entry.getKey());
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(getKey());
+        }
+
     }
+
+    private LinkedList<Entry<K, V>>[] table;
+    private int size;
+
+    public HashTable(int capacity) {
+        table = new LinkedList[capacity];
+        size = 0;
+    }
+
+    private int hash(K key) {
+        return Math.abs(Objects.hashCode(key)) % table.length;
+    }
+
+    public void put(K key, V value) {
+
+        int index = hash(key);
+
+        if (table[index] == null) {
+            table[index] = new LinkedList<>();
+        }
+
+        for (Entry<K, V> entry : table[index]) {
+            if (entry.getKey().equals(key)) {
+                entry.setValue(value);
+                return;
+            }
+        }
+
+        table[index].add(new Entry<>(key, value));
+        size++;
+
+    }
+
+    public V get(K key) {
+
+        int index = hash(key);
+
+        LinkedList<Entry<K, V>> bucket = table[index];
+
+        if (bucket != null) {
+            for (Entry<K, V> entry : bucket) {
+                if (entry.getKey().equals(key)) {
+                    return entry.getValue();
+                }
+            }
+        }
+
+        return null;
+    }
+
+    public V remove(K key) {
+
+        int index = hash(key);
+
+        LinkedList<Entry<K, V>> bucket = table[index];
+
+        if (bucket != null) {
+            for (Entry<K, V> entry : bucket) {
+                if (entry.getKey().equals(key)) {
+                    V removedValue = entry.getValue();
+                    bucket.remove(entry);
+                    size--;
+                    return removedValue;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    public int size() {
+        return size;
+    }
+
+    public boolean isEmpty() {
+        return size == 0;
+    }
+
 }
 
 Задача 2
